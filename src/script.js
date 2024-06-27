@@ -2,17 +2,28 @@ const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 
 function setCanvasSize() {
-  const dpr = window.devicePixelRatio || 2;
+  const pixelRatio = (function() {
+    const ctx = document.createElement("canvas").getContext("2d"),
+      dpr = window.devicePixelRatio || 1,
+      bsr = ctx.webkitBackingStorePixelRatio ||
+        ctx.mozBackingStorePixelRatio ||
+        ctx.msBackingStorePixelRatio ||
+        ctx.oBackingStorePixelRatio ||
+        ctx.backingStorePixelRatio || 1;
 
-  const width = 256, height = 256;
-  console.log(width, height);
+    return dpr / bsr;
+  })();
 
-  if (canvas.width !== width * dpr || canvas.height !== height * dpr) {
-    canvas.width = width * dpr;
-    canvas.height = height * dpr;
+  const createHiDPICanvas = function(w, h, ratio) {
+    if (!ratio) { ratio = pixelRatio; }
+    canvas.width = w * ratio;
+    canvas.height = h * ratio;
+    canvas.style.width = w + "px";
+    canvas.style.height = h + "px";
+    canvas.getContext("2d").setTransform(ratio, 0, 0, ratio, 0, 0);
+    canvas.id = "lumina-canvas";
   }
 
-  ctx.setTransform(1, 0, 0, 1, 0, 0);
-  ctx.scale(dpr, dpr);
+  createHiDPICanvas(256, 256, 4);
 }
 setCanvasSize();
