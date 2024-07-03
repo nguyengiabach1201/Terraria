@@ -1,1 +1,1 @@
-# My my own remake of Terraria
+# My own remake of Terraria
