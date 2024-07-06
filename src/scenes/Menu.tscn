@@ -1,0 +1,104 @@
+[gd_scene load_steps=8 format=3 uid="uid://cgl54dvarjv6t"]
+
+[ext_resource type="Script" path="res://scripts/menu.gd" id="1_2oe6a"]
+[ext_resource type="PackedScene" uid="uid://p7q78vncxiad" path="res://scenes/Main.tscn" id="2_5ft64"]
+[ext_resource type="FontFile" uid="uid://cropgheitdvhm" path="res://font/pixel-font.ttf" id="3_juk0x"]
+[ext_resource type="AudioStream" uid="uid://c3lkr1lcygt3" path="res://audios/menu-theme.WAV" id="3_kdcce"]
+[ext_resource type="Texture2D" uid="uid://cfac1qtxp8i4j" path="res://tilesets/menu-background.png" id="6_ykuj0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jknq6"]
+bg_color = Color(0.180936, 0.536, 0.592737, 0.454902)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tef78"]
+bg_color = Color(0.149575, 0.457017, 0.445957, 0.454902)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="Menu" type="Node2D" node_paths=PackedStringArray("background")]
+script = ExtResource("1_2oe6a")
+background = NodePath("CanvasLayer/MarginContainer/Background")
+main = ExtResource("2_5ft64")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = -128.0
+offset_right = 128.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 128)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_juk0x")
+theme_override_font_sizes/font_size = 40
+text = "EXODIUM"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 0
+
+[node name="Start Button" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_juk0x")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_jknq6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_tef78")
+text = "START"
+
+[node name="MarginContainer2" type="MarginContainer" parent="CanvasLayer/MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 25
+
+[node name="Option Button" type="Button" parent="CanvasLayer/MarginContainer/VBoxContainer/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_juk0x")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_jknq6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_tef78")
+text = "OPTION"
+
+[node name="Background" type="Node2D" parent="CanvasLayer/MarginContainer"]
+modulate = Color(0.733333, 1, 1, 1)
+z_index = -1
+position = Vector2(128, 128)
+
+[node name="Menu-background" type="Sprite2D" parent="CanvasLayer/MarginContainer/Background"]
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("6_ykuj0")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_kdcce")
+autoplay = true
+
+[connection signal="button_up" from="CanvasLayer/MarginContainer/VBoxContainer/VBoxContainer/MarginContainer/Start Button" to="." method="_on_start_button_button_up"]

@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://ccyeppvgcbe3m"]
+
+[ext_resource type="Script" path="res://scripts/Item.gd" id="1_cwhrk"]
+[ext_resource type="Texture2D" uid="uid://xnq02jpphtb5" path="res://imgs/Breaking/square_white.png" id="2_rp8fl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_njmgi"]
+size = Vector2(32, 32)
+
+[node name="Item" type="CharacterBody2D"]
+top_level = true
+script = ExtResource("1_cwhrk")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+
+[node name="SquareWhite" type="Sprite2D" parent="Sprite2D"]
+show_behind_parent = true
+scale = Vector2(8.4, 8.4)
+texture = ExtResource("2_rp8fl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_njmgi")

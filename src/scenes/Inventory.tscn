@@ -1,0 +1,174 @@
+[gd_scene load_steps=4 format=3 uid="uid://cyerx7ri6k0kh"]
+
+[ext_resource type="Script" path="res://scripts/inventory.gd" id="1_qx5th"]
+[ext_resource type="Texture2D" uid="uid://bewf873v3te4v" path="res://imgs/slot-selected.png" id="2_0k4ft"]
+[ext_resource type="Texture2D" uid="uid://gk4y4h520f3w" path="res://imgs/slot-unselected.png" id="2_4kwy3"]
+
+[node name="Inventory" type="Node2D" node_paths=PackedStringArray("slotSprites", "itemSpriteForMouse")]
+script = ExtResource("1_qx5th")
+slotSprites = [NodePath("CanvasLayer/MarginContainer/Slot1"), NodePath("CanvasLayer/MarginContainer/Slot2"), NodePath("CanvasLayer/MarginContainer/Slot3"), NodePath("CanvasLayer/MarginContainer/Slot4"), NodePath("CanvasLayer/MarginContainer/Slot5"), NodePath("CanvasLayer/MarginContainer/Slot6"), NodePath("CanvasLayer/MarginContainer/Slot7"), NodePath("CanvasLayer/MarginContainer/Slot8")]
+selectedSlotImage = ExtResource("2_0k4ft")
+unselectedSlotImage = ExtResource("2_4kwy3")
+itemSpriteForMouse = NodePath("CanvasLayer/Item Sprite For Mouse")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -512.0
+offset_top = -512.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="Slot1" type="Sprite2D" parent="CanvasLayer/MarginContainer"]
+position = Vector2(491, 491)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_4kwy3")
+
+[node name="Item" type="Sprite2D" parent="CanvasLayer/MarginContainer/Slot1"]
+scale = Vector2(0.8, 0.8)
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/Slot1"]
+offset_left = -40.0
+offset_top = 16.0
+offset_right = 47.0
+offset_bottom = 85.0
+theme_override_font_sizes/font_size = 50
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot2" type="Sprite2D" parent="CanvasLayer/MarginContainer"]
+position = Vector2(454, 491)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_4kwy3")
+
+[node name="Item" type="Sprite2D" parent="CanvasLayer/MarginContainer/Slot2"]
+scale = Vector2(0.8, 0.8)
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/Slot2"]
+offset_left = -40.0
+offset_top = 16.0
+offset_right = 47.0
+offset_bottom = 85.0
+theme_override_font_sizes/font_size = 50
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot3" type="Sprite2D" parent="CanvasLayer/MarginContainer"]
+position = Vector2(417, 491)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_4kwy3")
+
+[node name="Item" type="Sprite2D" parent="CanvasLayer/MarginContainer/Slot3"]
+scale = Vector2(0.8, 0.8)
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/Slot3"]
+offset_left = -40.0
+offset_top = 16.0
+offset_right = 47.0
+offset_bottom = 85.0
+theme_override_font_sizes/font_size = 50
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot4" type="Sprite2D" parent="CanvasLayer/MarginContainer"]
+position = Vector2(380, 491)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_4kwy3")
+
+[node name="Item" type="Sprite2D" parent="CanvasLayer/MarginContainer/Slot4"]
+scale = Vector2(0.8, 0.8)
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/Slot4"]
+offset_left = -40.0
+offset_top = 16.0
+offset_right = 47.0
+offset_bottom = 85.0
+theme_override_font_sizes/font_size = 50
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot5" type="Sprite2D" parent="CanvasLayer/MarginContainer"]
+position = Vector2(343, 491)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_4kwy3")
+
+[node name="Item" type="Sprite2D" parent="CanvasLayer/MarginContainer/Slot5"]
+scale = Vector2(0.8, 0.8)
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/Slot5"]
+offset_left = -40.0
+offset_top = 16.0
+offset_right = 47.0
+offset_bottom = 85.0
+theme_override_font_sizes/font_size = 50
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot6" type="Sprite2D" parent="CanvasLayer/MarginContainer"]
+position = Vector2(306, 491)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_4kwy3")
+
+[node name="Item" type="Sprite2D" parent="CanvasLayer/MarginContainer/Slot6"]
+scale = Vector2(0.8, 0.8)
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/Slot6"]
+offset_left = -40.0
+offset_top = 16.0
+offset_right = 47.0
+offset_bottom = 85.0
+theme_override_font_sizes/font_size = 50
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot7" type="Sprite2D" parent="CanvasLayer/MarginContainer"]
+position = Vector2(269, 491)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_4kwy3")
+
+[node name="Item" type="Sprite2D" parent="CanvasLayer/MarginContainer/Slot7"]
+scale = Vector2(0.8, 0.8)
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/Slot7"]
+offset_left = -40.0
+offset_top = 16.0
+offset_right = 47.0
+offset_bottom = 85.0
+theme_override_font_sizes/font_size = 50
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot8" type="Sprite2D" parent="CanvasLayer/MarginContainer"]
+position = Vector2(232, 491)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_4kwy3")
+
+[node name="Item" type="Sprite2D" parent="CanvasLayer/MarginContainer/Slot8"]
+scale = Vector2(0.8, 0.8)
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/Slot8"]
+offset_left = -40.0
+offset_top = 16.0
+offset_right = 47.0
+offset_bottom = 85.0
+theme_override_font_sizes/font_size = 50
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Item Sprite For Mouse" type="Sprite2D" parent="CanvasLayer"]
+visible = false
+top_level = true
+scale = Vector2(0.25, 0.25)

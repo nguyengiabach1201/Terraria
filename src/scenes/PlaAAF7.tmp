@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=3 uid="uid://c418idf5c58eq"]
+
+[ext_resource type="Script" path="res://scripts/control.gd" id="1_ephdd"]
+[ext_resource type="Texture2D" uid="uid://cerkrgcptkqk4" path="res://imgs/Player/male_body.png" id="2_e00wa"]
+[ext_resource type="Texture2D" uid="uid://871kc3cov0je" path="res://icon.svg" id="2_fkjr1"]
+[ext_resource type="Texture2D" uid="uid://bqwewfcbv4rre" path="res://imgs/Player/male_head.png" id="3_ixv3m"]
+[ext_resource type="Texture2D" uid="uid://chu3aiyre5o03" path="res://imgs/Player/male_leg.png" id="4_c18hd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5i7ph"]
+size = Vector2(18, 18)
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_ephdd")
+
+[node name="Torso" type="Sprite2D" parent="."]
+visible = false
+scale = Vector2(2, 2)
+texture = ExtResource("2_e00wa")
+
+[node name="Head" type="Sprite2D" parent="Torso"]
+position = Vector2(0, -64)
+texture = ExtResource("3_ixv3m")
+
+[node name="Leg1" type="Sprite2D" parent="Torso"]
+position = Vector2(0, 64)
+texture = ExtResource("4_c18hd")
+
+[node name="Leg2" type="Sprite2D" parent="Torso"]
+position = Vector2(0, 64)
+texture = ExtResource("4_c18hd")
+
+[node name="Icon" type="Sprite2D" parent="."]
+texture = ExtResource("2_fkjr1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(6.6, 6.6)
+shape = SubResource("RectangleShape2D_5i7ph")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
