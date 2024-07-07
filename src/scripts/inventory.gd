@@ -32,11 +32,11 @@ func _ready():
 	setSelectedSlot()
 
 func _process(_delta):
-	if not player.isNotSelectingItem:
+	if not player.isNotSelectingItem and items[clickedSpriteIndex] != "":
 		itemSpriteForMouse.visible = true
 		itemSpriteForMouse.texture = itemSprite[items[clickedSpriteIndex]]
-		itemSpriteForMouse.position = get_viewport().get_mouse_position() + get_viewport_rect().size - Vector2(512,512)
-	if player.isNotSelectingItem:
+		itemSpriteForMouse.position = get_viewport().get_mouse_position()
+	elif player.isNotSelectingItem:
 		itemSpriteForMouse.visible = false
 
 func _input(event):
@@ -80,7 +80,13 @@ func _input(event):
 						numbers[closestSpriteIndex] = numbers[clickedSpriteIndex]
 						numbers[clickedSpriteIndex] = 0
 					
+					currentSelected = closestSpriteIndex
+					setSelectedSlot()
 					updateInventory()
+				
+				if clickedSpriteIndex == closestSpriteIndex:
+					currentSelected = closestSpriteIndex
+					setSelectedSlot()
 				
 				player.isNotSelectingItem = true
 

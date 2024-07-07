@@ -172,14 +172,15 @@ func breakBlock():
 			instance.position = Vector2((mousePosition.x + 0.5) * world.tileSize, (mousePosition.y + 0.5) * world.tileSize)
 			instance.get_children()[0].texture = inventory.itemSprite[loot[world.terrainMap[mousePosition.x][mousePosition.y]]]
 			world.add_child(instance)
+			
+			breakParticle.position = breakSprite.position
+			breakParticle.texture = inventory.itemSprite[loot[world.terrainMap[mousePosition.x][mousePosition.y]]]
+			breakParticle.emitting = true
 		
 		world.terrainMap[mousePosition.x][mousePosition.y] = "null"
 		if world.terrainMap[mousePosition.x][mousePosition.y-1]:
 			if "fern" in world.terrainMap[mousePosition.x][mousePosition.y-1]:
 				world.terrainMap[mousePosition.x][mousePosition.y-1] = "null"
-		
-		breakParticle.position = breakSprite.position
-		breakParticle.emitting = true
 		
 		world.suddenDraw = true
 		

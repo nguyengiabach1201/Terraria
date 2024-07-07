@@ -18,8 +18,9 @@ var suddenDraw: bool = false
 
 var terrainMap: Array = []
 var backgroundMap: Array = []
+
 var lightMap: Array = []
-var fixedLightMap: Array = []
+var hasLightCalculated: Array = []
 
 var background: Node2D
 
@@ -28,16 +29,20 @@ var playerSpawnPosition: Vector2i
 
 var tileType = {
 	"null": "null",
+	
 	"dirt": "dirt",
 	"backgroundDirt":"backgroundDirt",
 	"grass": "grass",
+	
 	"stone": "stone",
 	"backgroundStone": "backgroundStone",
 	"ironOre": "ironOre",
 	"diamondOre": "diamondOre",
+	
 	"root": "root",
 	"trunk": "trunk",
 	"plank": "plank",
+	
 	"leaf": "leaf",
 	"fern1":"fern1",
 	"fern2":"fern2",
@@ -47,18 +52,22 @@ var tileType = {
 
 var tilePosition = {
 	"null": Vector2i(8,7),
+	
 	"dirt": Vector2i(7,5),
-	"backgroundDirt": Vector2i(6,0),
 	"grass": Vector2i(7,4),
+	"backgroundDirt": Vector2i(6,0),
+	
 	"stone": Vector2i(3,4),
-	"backgroundStone": Vector2i(5,9),
 	"ironOre": Vector2i(2,0),
 	"diamondOre": Vector2i(2,9),
+	"backgroundStone": Vector2i(5,9),
+	
 	#"root": Vector2i(1,2),
 	#"trunk": Vector2i(1,1),
 	"plank": Vector2i(0,1),
 	"root": Vector2i(1,0),
 	"trunk": Vector2i(1,0),
+	
 	"leaf": Vector2i(4,8),
 	"fern1": Vector2i(6,4),
 	"fern2": Vector2i(6,5),
@@ -66,13 +75,13 @@ var tilePosition = {
 	"fern4": Vector2i(6,7),
 }
 
-var tileBlockLight: Array[String] = ["dirt", "grass", "plank", "stone", "ironOre", "diamondOre"]
+var tileBlockLight: Array[String] = ["dirt", "grass", "plank", "stone", "ironOre", "diamondOre", "plank"]
 
 var tileSize = 128
 #var width = 512; var height = 256
-#var width = 1024 + 2; var height = 512 + 2
+var width = 1024 + 2; var height = 512 + 2
 #var width = 110 * 16 + 2; var height = 56*16 + 2
-var width = 48 + 2; var height = 48 + 2
+#var width = 48 + 2; var height = 48 + 2
 var chunkSize = tileSize * 8
 #var chunkSize = 128 * 12
 
@@ -101,7 +110,7 @@ func _ready():
 	activeChunks = getActiveChunks()
 	oldActiveChunks = activeChunks
 	
-	getLightMap(activeChunks, true)
+	getLightMap(activeChunks)
 	
 	resize()
 	get_tree().get_root().size_changed.connect(resize)
@@ -113,8 +122,13 @@ func _ready():
 
 func resize():
 	suddenDraw = true
-	#chunkSize = tileSize * 8
-	renderSize.x = ceil(renderSize.y * get_viewport().size.x / float(get_viewport().size.y))
+	
+	if get_viewport().size.x >= get_viewport().size.y:
+		renderSize.y = 1
+		renderSize.x = ceil(renderSize.y * get_viewport().size.x / float(get_viewport().size.y))
+	if get_viewport().size.x < get_viewport().size.y:
+		renderSize.x = 1
+		renderSize.y = ceil(renderSize.x * get_viewport().size.y / float(get_viewport().size.x))
 
 func _process(delta):
 	#print(Engine.get_frames_per_second())
@@ -149,10 +163,10 @@ func generate():
 		backgroundMap.append([])
 		
 		lightMap.append([])
+		hasLightCalculated.append(false)
 		
 		for y in height:
 			#Lightmap
-			#lightMap[x].append(0)
 			lightMap[x].append(6)
 			
 			if y > height - noiseHeight:
@@ -216,6 +230,7 @@ func generate():
 				#Nothing
 				terrainMap[x].append(tileType["null"])
 				backgroundMap[x].append(tileType["null"])
+				
 				lightMap[x][y] = 0
 			
 	for tree in trees:
@@ -257,10 +272,9 @@ func renderChunk(chunk: Vector2):
 			if terrainMap[x][y] != "null":
 				terrainTileMap.set_cell(lightMap[x][y], Vector2i(x,y), 0, tilePosition[terrainMap[x][y]])
 
-func getLightMap(chunks, init = false):
+func getLightMap(chunks):
 	for x in range(chunks[0].x * chunkSize / tileSize, (chunks[len(chunks)-1].x + 1) * chunkSize / tileSize):
-		var light: float = lightMap[x][chunks[0].y * chunkSize / tileSize]
-		if init: light = 0
+		var light: float = lightMap[x][(chunks[0].y-1) * chunkSize / tileSize]
 		var beingBlocked := false
 		
 		for y in range(chunks[0].y * chunkSize / tileSize, (chunks[len(chunks)-1].y + 1) * chunkSize / tileSize):
@@ -278,6 +292,12 @@ func getLightMap(chunks, init = false):
 			
 			light = clamp(light,0,6)
 			lightMap[x][y] = int(light)
+			
+			if lightMap[x][y] + 1 < lightMap[x-1][y]:
+				lightMap[x-1][y] = lightMap[x][y] + 1
+			
+			if lightMap[x][y] > lightMap[x-1][y] + 1:
+				lightMap[x][y] = lightMap[x-1][y] + 1
 
 func modulatePlayer():
 	var surround: Array

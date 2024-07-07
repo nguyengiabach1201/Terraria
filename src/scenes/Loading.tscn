@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://car7pgpdgpxx0"]
+
+[ext_resource type="Script" path="res://scripts/Loading.gd" id="1_kjn3s"]
+[ext_resource type="FontFile" uid="uid://cropgheitdvhm" path="res://font/pixel-font.ttf" id="1_yqy1a"]
+[ext_resource type="PackedScene" uid="uid://p7q78vncxiad" path="res://scenes/Main.tscn" id="2_qv4qc"]
+[ext_resource type="Texture2D" uid="uid://xnq02jpphtb5" path="res://imgs/Breaking/square_white.png" id="4_gf2eg"]
+
+[node name="Loading" type="Node2D"]
+script = ExtResource("1_kjn3s")
+main = ExtResource("2_qv4qc")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -260.0
+offset_right = 256.0
+offset_bottom = 260.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_yqy1a")
+theme_override_font_sizes/font_size = 30
+text = "Loading..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Background" type="Sprite2D" parent="CanvasLayer/MarginContainer"]
+modulate = Color(0.111197, 0.111197, 0.111197, 1)
+z_index = -1
+position = Vector2(256, 260)
+scale = Vector2(200, 200)
+texture = ExtResource("4_gf2eg")

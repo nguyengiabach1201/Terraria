@@ -299,7 +299,7 @@ script = ExtResource("1_6urgp")
 player = NodePath("Player")
 camera = NodePath("Camera2D")
 smoothness = 40.0
-modifier = 0.1
+modifier = 0.125
 ironRarity = 0.25
 diamondRarity = 0.15
 

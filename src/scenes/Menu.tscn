@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://cgl54dvarjv6t"]
 
 [ext_resource type="Script" path="res://scripts/menu.gd" id="1_2oe6a"]
-[ext_resource type="PackedScene" uid="uid://p7q78vncxiad" path="res://scenes/Main.tscn" id="2_5ft64"]
+[ext_resource type="PackedScene" uid="uid://car7pgpdgpxx0" path="res://scenes/Loading.tscn" id="2_nrw4t"]
 [ext_resource type="FontFile" uid="uid://cropgheitdvhm" path="res://font/pixel-font.ttf" id="3_juk0x"]
 [ext_resource type="AudioStream" uid="uid://c3lkr1lcygt3" path="res://audios/menu-theme.WAV" id="3_kdcce"]
 [ext_resource type="Texture2D" uid="uid://cfac1qtxp8i4j" path="res://tilesets/menu-background.png" id="6_ykuj0"]
@@ -23,7 +23,7 @@ corner_radius_bottom_left = 10
 [node name="Menu" type="Node2D" node_paths=PackedStringArray("background")]
 script = ExtResource("1_2oe6a")
 background = NodePath("CanvasLayer/MarginContainer/Background")
-main = ExtResource("2_5ft64")
+load = ExtResource("2_nrw4t")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

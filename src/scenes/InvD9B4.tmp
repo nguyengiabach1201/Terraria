@@ -169,5 +169,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Item Sprite For Mouse" type="Sprite2D" parent="CanvasLayer"]
+visible = false
 top_level = true
 scale = Vector2(0.25, 0.25)

@@ -3,7 +3,7 @@ extends Node2D
 @export var background: Node2D
 var backgroundSpeed := 10.0
 
-@export var main: PackedScene
+@export var load: PackedScene
 
 func _ready():
 	DisplayServer.window_set_min_size(Vector2(512,512))
@@ -20,7 +20,7 @@ func _process(delta):
 		backgroundSpeed = -backgroundSpeed
 
 func _on_start_button_button_up():
-	get_tree().change_scene_to_packed(main)
+	get_tree().change_scene_to_packed(load)
 
 func resize():
 	#print(ceil(get_viewport().size.x / float(get_viewport().size.y)))
