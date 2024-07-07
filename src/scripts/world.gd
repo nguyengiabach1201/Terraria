@@ -274,8 +274,9 @@ func renderChunk(chunk: Vector2):
 
 func getLightMap(chunks):
 	for x in range(chunks[0].x * chunkSize / tileSize, (chunks[len(chunks)-1].x + 1) * chunkSize / tileSize):
-		var light: float = lightMap[x][(chunks[0].y-1) * chunkSize / tileSize]
+		var light: float = lightMap[x][(chunks[0].y) * chunkSize / tileSize - 1]
 		var beingBlocked := false
+		if light > 0: beingBlocked = true
 		
 		for y in range(chunks[0].y * chunkSize / tileSize, (chunks[len(chunks)-1].y + 1) * chunkSize / tileSize):
 			if terrainMap[x][y] in tileBlockLight:
