@@ -337,7 +337,6 @@ texture = ExtResource("7_gm2yh")
 
 [node name="Break Particle" type="CPUParticles2D" parent="."]
 material = SubResource("CanvasItemMaterial_wybpl")
-position = Vector2(512, 0)
 emitting = false
 one_shot = true
 explosiveness = 1.0

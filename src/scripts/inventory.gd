@@ -7,6 +7,8 @@ extends Node2D
 @export var player: CharacterBody2D
 
 @export var itemSpriteForMouse: Sprite2D
+@export var numberOfItemForMouse: Label
+var itemForMouse: String
 
 var currentSelected: int
 var items: Array[String] = ["", "", "", "","", "", "", ""]
@@ -32,9 +34,8 @@ func _ready():
 	setSelectedSlot()
 
 func _process(_delta):
-	if not player.isNotSelectingItem and items[clickedSpriteIndex] != "":
-		itemSpriteForMouse.visible = true
-		itemSpriteForMouse.texture = itemSprite[items[clickedSpriteIndex]]
+	if not player.isNotSelectingItem:
+		itemSpriteForMouse.visible = int(numberOfItemForMouse.text) > 0
 		itemSpriteForMouse.position = get_viewport().get_mouse_position()
 	elif player.isNotSelectingItem:
 		itemSpriteForMouse.visible = false
@@ -60,6 +61,17 @@ func _input(event):
 					if (slotSprites[i].position + get_viewport_rect().size - Vector2(512,512)).distance_to(get_viewport().get_mouse_position()) < 18:
 						clickedSpriteIndex = i
 						player.isNotSelectingItem = false
+						
+						if items[clickedSpriteIndex] != "" and numbers[clickedSpriteIndex] != 0:
+							itemSpriteForMouse.texture = itemSprite[items[clickedSpriteIndex]]
+							numberOfItemForMouse.text = str(numbers[clickedSpriteIndex])
+							itemForMouse = items[clickedSpriteIndex]
+							
+							items[clickedSpriteIndex] = ""
+							numbers[clickedSpriteIndex] = 0
+							
+							updateInventory()
+						
 						break
 		
 		if event.is_released():
@@ -72,21 +84,31 @@ func _input(event):
 						break
 				
 				if clickedSpriteIndex != -1 and closestSpriteIndex != -1 and clickedSpriteIndex != closestSpriteIndex:
-					if items[closestSpriteIndex] == items[clickedSpriteIndex]:
-						numbers[closestSpriteIndex] += numbers[clickedSpriteIndex]
-						numbers[clickedSpriteIndex] = 0
-					if items[closestSpriteIndex] != items[clickedSpriteIndex]:
-						items[closestSpriteIndex] = items[clickedSpriteIndex]
-						numbers[closestSpriteIndex] = numbers[clickedSpriteIndex]
-						numbers[clickedSpriteIndex] = 0
+					if items[closestSpriteIndex] == itemForMouse:
+						numbers[closestSpriteIndex] += int(numberOfItemForMouse.text)
+						#numbers[clickedSpriteIndex] = 0
+					if items[closestSpriteIndex] != itemForMouse:
+						items[closestSpriteIndex] = itemForMouse
+						numbers[closestSpriteIndex] = int(numberOfItemForMouse.text)
+						#numbers[clickedSpriteIndex] = 0
 					
 					currentSelected = closestSpriteIndex
-					setSelectedSlot()
-					updateInventory()
-				
-				if clickedSpriteIndex == closestSpriteIndex:
+					
+				elif closestSpriteIndex == -1:
+					items[clickedSpriteIndex] = itemForMouse
+					numbers[clickedSpriteIndex] = int(numberOfItemForMouse.text)
+					
+				elif clickedSpriteIndex == closestSpriteIndex:
 					currentSelected = closestSpriteIndex
-					setSelectedSlot()
+					items[closestSpriteIndex] = itemForMouse
+					numbers[closestSpriteIndex] = int(numberOfItemForMouse.text)
+				
+				setSelectedSlot()
+				updateInventory()
+				
+				itemForMouse = ""
+				numberOfItemForMouse.text = str(0)
+				itemSpriteForMouse.texture = null
 				
 				player.isNotSelectingItem = true
 

@@ -20,7 +20,6 @@ var terrainMap: Array = []
 var backgroundMap: Array = []
 
 var lightMap: Array = []
-var hasLightCalculated: Array = []
 
 var background: Node2D
 
@@ -131,11 +130,12 @@ func resize():
 		renderSize.y = ceil(renderSize.x * get_viewport().size.y / float(get_viewport().size.x))
 
 func _process(delta):
-	#print(Engine.get_frames_per_second())
+	print(Engine.get_frames_per_second())
 	
 	modulatePlayer()
 	
 	if getChunk() != oldChunk or suddenDraw:
+		#print(activeChunks," ",getActiveChunks())
 		activeChunks = getActiveChunks()
 		getLightMap(activeChunks)
 		
@@ -163,7 +163,6 @@ func generate():
 		backgroundMap.append([])
 		
 		lightMap.append([])
-		hasLightCalculated.append(false)
 		
 		for y in height:
 			#Lightmap
@@ -259,9 +258,10 @@ func getActiveChunks():
 		for y in range(-renderSize.y,renderSize.y+1):
 			var chunk :Vector2 = getChunk()
 			chunk.x += x; chunk.y += y
-			if (clamp(chunk.y, 0, height * tileSize / chunkSize - 1) == chunk.y
+			if (
+				clamp(chunk.y, 0, height * tileSize / chunkSize - 1) == chunk.y
 				and clamp(chunk.x, 0, width * tileSize / chunkSize - 1) == chunk.x
-			):
+				):
 				chunks.append(chunk)
 	return chunks
 
@@ -273,12 +273,12 @@ func renderChunk(chunk: Vector2):
 				terrainTileMap.set_cell(lightMap[x][y], Vector2i(x,y), 0, tilePosition[terrainMap[x][y]])
 
 func getLightMap(chunks):
-	for x in range(chunks[0].x * chunkSize / tileSize, (chunks[len(chunks)-1].x + 1) * chunkSize / tileSize):
-		var light: float = lightMap[x][(chunks[0].y) * chunkSize / tileSize - 1]
-		var beingBlocked := false
-		if light > 0: beingBlocked = true
+	for x in range(chunks[0].x * chunkSize / tileSize, (chunks[len(chunks)-1].x+1) * chunkSize / tileSize - 1):
+		# I dont know why this work
+		var light: float = lightMap[x][chunks[0].y * chunkSize / tileSize + 2]
+		var beingBlocked := light > 0
 		
-		for y in range(chunks[0].y * chunkSize / tileSize, (chunks[len(chunks)-1].y + 1) * chunkSize / tileSize):
+		for y in range(chunks[0].y * chunkSize / tileSize, (chunks[len(chunks)-1].y+1) * chunkSize / tileSize - 1):
 			if terrainMap[x][y] in tileBlockLight:
 				beingBlocked = true
 				light += 1
@@ -296,6 +296,11 @@ func getLightMap(chunks):
 			
 			if lightMap[x][y] + 1 < lightMap[x-1][y]:
 				lightMap[x-1][y] = lightMap[x][y] + 1
+				
+				var index := 2
+				while lightMap[x-index][y] and lightMap[x-index+1][y] + 1 < lightMap[x-index][y]:
+					lightMap[x-index][y] = lightMap[x-index+1][y] + 1
+					index += 1
 			
 			if lightMap[x][y] > lightMap[x-1][y] + 1:
 				lightMap[x][y] = lightMap[x-1][y] + 1

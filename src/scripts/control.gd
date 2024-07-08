@@ -87,6 +87,10 @@ var dropItem = load("res://scenes/Item.tscn")
 
 var isNotSelectingItem = true
 
+var craftingMethods = {
+	
+}
+
 @export var world: Node2D
 @export var inventory: Node2D
 
@@ -94,7 +98,7 @@ var isNotSelectingItem = true
 @export var breakParticle: CPUParticles2D
 @export var soundPlayer: AudioStreamPlayer
 
-func _physics_process(delta):
+func _process(delta):
 	move(delta)
 	
 	if Input.is_mouse_button_pressed(1) and isNotSelectingItem:
@@ -113,7 +117,6 @@ func _physics_process(delta):
 		placeBlock()
 	
 	oldMousePosition = mousePosition
-	#isNotSelectingItem = true
 
 func move(delta):
 	if not is_on_floor():
